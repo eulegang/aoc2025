@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <string>
+#include <vector>
+
 namespace d1 {
 enum class Dir : char {
   Left = 'L',
@@ -15,6 +17,9 @@ struct Turn {
   Turn(const std::string &input);
   operator std::string();
 };
+
+int on_zero(const std::vector<Turn> &turns);
+int past_zero(const std::vector<Turn> &turns);
 } // namespace d1
 
 #endif
