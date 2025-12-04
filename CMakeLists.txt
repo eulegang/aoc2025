@@ -3,6 +3,7 @@ project(aoc2025 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON) 
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTEST REQUIRED gtest)
@@ -15,9 +16,19 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils)
 enable_testing()
 
 file(GLOB UTILS_SRC "utils/*.cpp")
+list(FILTER UTILS_SRC EXCLUDE REGEX "test.cpp")
 add_library(utils STATIC ${UTILS_SRC})
 
-set(FOLDERS day1)
+add_executable(utils-tests)
+target_compile_features(utils-tests PRIVATE cxx_std_23) 
+target_sources(utils-tests PRIVATE ${UTILS_SRC} utils/test.cpp tests/main.cpp)
+
+target_link_libraries(utils-tests PRIVATE ${GTEST_LDFLAGS})
+target_compile_options(utils-tests PRIVATE ${GTEST_CFLAGS})
+
+add_test(utils-tests utils-tests)
+
+set(FOLDERS day1 day2)
 
 foreach(FOLDER IN ITEMS ${FOLDERS})
   string(REGEX REPLACE "ay" "" PART ${FOLDER})
@@ -32,14 +43,17 @@ foreach(FOLDER IN ITEMS ${FOLDERS})
 
   add_executable(${PART}p1 ${${PART}P1_SRC})
   target_link_libraries(${PART}p1 PRIVATE utils)
+  target_compile_features(${PART}p1 PRIVATE cxx_std_23) 
 
   add_executable(${PART}p2 ${${PART}P2_SRC})
   target_link_libraries(${PART}p2 PRIVATE utils)
+  target_compile_features(${PART}p2 PRIVATE cxx_std_23) 
 
   list(FILTER ${PART}_TEST_SRC EXCLUDE REGEX "part[12].cpp")
   list(APPEND ${PART}_TEST_SRC "tests/main.cpp")
 
   add_executable(${FOLDER}-tests)
+  target_compile_features(${FOLDER}-tests PRIVATE cxx_std_23) 
   target_sources(${FOLDER}-tests PRIVATE ${${PART}_TEST_SRC})
 
   target_link_libraries(${FOLDER}-tests PRIVATE ${GTEST_LDFLAGS})
