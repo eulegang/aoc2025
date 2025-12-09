@@ -49,10 +49,14 @@ foreach(FOLDER IN ITEMS ${FOLDERS})
   add_executable(${PART}p1 ${${PART}P1_SRC})
   target_link_libraries(${PART}p1 PRIVATE utils)
   target_compile_features(${PART}p1 PRIVATE cxx_std_23) 
+  target_link_libraries(${PART}p1 PRIVATE ${CHROMA_LDFLAGS})
+  target_compile_options(${PART}p1 PRIVATE ${CHROMA_CFLAGS})
 
   add_executable(${PART}p2 ${${PART}P2_SRC})
   target_link_libraries(${PART}p2 PRIVATE utils)
   target_compile_features(${PART}p2 PRIVATE cxx_std_23) 
+  target_link_libraries(${PART}p2 PRIVATE ${CHROMA_LDFLAGS})
+  target_compile_options(${PART}p2 PRIVATE ${CHROMA_CFLAGS})
 
   list(FILTER ${PART}_TEST_SRC EXCLUDE REGEX "part[12].cpp")
   list(APPEND ${PART}_TEST_SRC "tests/main.cpp")
@@ -63,6 +67,8 @@ foreach(FOLDER IN ITEMS ${FOLDERS})
 
   target_link_libraries(${FOLDER}-tests PRIVATE ${GTEST_LDFLAGS})
   target_compile_options(${FOLDER}-tests PRIVATE ${GTEST_CFLAGS})
+  target_link_libraries(${FOLDER}-tests PRIVATE ${CHROMA_LDFLAGS})
+  target_compile_options(${FOLDER}-tests PRIVATE ${CHROMA_CFLAGS})
 
   add_test(${FOLDER}-tests ${FOLDER}-tests)
 endforeach()
