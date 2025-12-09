@@ -1,7 +1,7 @@
 #include "input.h"
-#include "invalid.h"
 #include "model.h"
 #include "gtest/gtest.h"
+#include <chroma.h>
 
 using namespace std;
 
@@ -30,23 +30,26 @@ TEST(Day2, ExampleParse) {
   ASSERT_EQ(parts, expected);
 }
 
+#define ANNOUNCE(t)                                                            \
+  std::cout << chroma::green << #t << chroma::clear << std::endl;              \
+  t
+
 TEST(Day2, ExampleSubCounts) {
-  EXPECT_EQ(Range(11, 22).invalid_id_sum(), 33);
-  EXPECT_EQ(Range(95, 115).invalid_id_sum(), 99);
-  EXPECT_EQ(Range(998, 1012).invalid_id_sum(), 1010);
-  EXPECT_EQ(Range(1188511880, 1188511890).invalid_id_sum(), 1188511885);
-  EXPECT_EQ(Range(222220, 222224).invalid_id_sum(), 222222);
-  EXPECT_EQ(Range(1698522, 1698528).invalid_id_sum(), 0);
-  EXPECT_EQ(Range(446443, 446449).invalid_id_sum(), 446446);
-  EXPECT_EQ(Range(38593856, 38593862).invalid_id_sum(), 38593859);
-  EXPECT_EQ(Range(565653, 565659).invalid_id_sum(), 0);
-  EXPECT_EQ(Range(824824821, 824824827).invalid_id_sum(), 0);
-  EXPECT_EQ(Range(2121212118, 2121212124).invalid_id_sum(), 0);
+  ANNOUNCE(EXPECT_EQ(Range(11, 22).invalid_id_sum(), 33));
+  ANNOUNCE(EXPECT_EQ(Range(95, 115).invalid_id_sum(), 99));
+  ANNOUNCE(EXPECT_EQ(Range(998, 1012).invalid_id_sum(), 1010));
+  ANNOUNCE(
+      EXPECT_EQ(Range(1188511880, 1188511890).invalid_id_sum(), 1188511885));
+  ANNOUNCE(EXPECT_EQ(Range(222220, 222224).invalid_id_sum(), 222222));
+  ANNOUNCE(EXPECT_EQ(Range(1698522, 1698528).invalid_id_sum(), 0));
+  ANNOUNCE(EXPECT_EQ(Range(446443, 446449).invalid_id_sum(), 446446));
+  ANNOUNCE(EXPECT_EQ(Range(38593856, 38593862).invalid_id_sum(), 38593859));
+  ANNOUNCE(EXPECT_EQ(Range(565653, 565659).invalid_id_sum(), 0));
+  ANNOUNCE(EXPECT_EQ(Range(824824821, 824824827).invalid_id_sum(), 0));
+  ANNOUNCE(EXPECT_EQ(Range(2121212118, 2121212124).invalid_id_sum(), 0));
 }
 
 TEST(Day2, ExampleCounts) {
-  GTEST_SKIP();
-
   const string input =
       "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,"
       "1698522-1698528,446443-446449,38593856-38593862,565653-565659,"
@@ -62,21 +65,37 @@ TEST(Day2, ExampleCounts) {
   EXPECT_EQ(sum, 1227775554);
 }
 
-TEST(Day2Invalid, digits) {
-  EXPECT_EQ(digits(0), 0);
-  EXPECT_EQ(digits(9), 1);
-  EXPECT_EQ(digits(10), 2);
-  EXPECT_EQ(digits(99), 2);
-  EXPECT_EQ(digits(100), 3);
-  EXPECT_EQ(digits(999), 3);
-  EXPECT_EQ(digits(1000), 4);
-}
-
-TEST(Day2Invalid, expand) {
-  EXPECT_EQ(expand(0), 1);
-  EXPECT_EQ(expand(1), 1);
-  EXPECT_EQ(expand(2), 10);
-  EXPECT_EQ(expand(3), 100);
-  EXPECT_EQ(expand(4), 1000);
-  EXPECT_EQ(expand(5), 10000);
+TEST(Day2, PARTS) {
+  // ANNOUNCE(EXPECT_EQ(Range(975119, 1004307).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(35171358, 35313940).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(6258659887, 6258804661).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(737649, 837633).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(85745820, 85956280).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(9627354, 9679470).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(2327309144, 2327509647).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(301168, 351545).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(537261, 631588).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(364281214, 364453549).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(9563727253, 9563879587).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(3680, 9127).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(388369417, 388406569).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(6677501, 6752949).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(650804, 678722).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(3314531, 3365076).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(1052, 2547).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(24134, 68316).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(8888820274, 8888998305).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(82614, 107458).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(456819, 529037).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(358216, 389777).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(24222539, 24266446).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(874565, 916752).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(3886244, 3960191).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(25, 110).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(9696951376, 9696996784).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(171, 671).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(5656545867, 5656605587).invalid_id_sum(), 0));
+  // ANNOUNCE(EXPECT_EQ(Range(75795017, 75865731).invalid_id_sum(), 0));
+  ANNOUNCE(EXPECT_EQ(Range(1, 16).invalid_id_sum(), 11));
+  // ANNOUNCE(EXPECT_EQ(Range(181025, 232078).invalid_id_sum(), 0));
 }

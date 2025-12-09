@@ -4,6 +4,11 @@
 #include <string>
 #include <vector>
 
+#define DBG(expr)                                                              \
+  (std::cout << chroma::purple << #expr << chroma::cyan << " = "               \
+             << chroma::yellow << expr << chroma::clear << std::endl,          \
+   expr)
+
 std::string read_file(const std::string &filename);
 std::vector<std::string> read_lines(const std::string &filename);
 

@@ -1,6 +1,9 @@
 #include "model.h"
 #include "input.h"
+#include <chroma.h>
+#include <cmath>
 #include <cstdio>
+#include <iostream>
 
 using namespace std;
 
@@ -32,30 +35,52 @@ bool Range::operator==(const Range &other) const {
   return this->start == other.start && this->end == other.end;
 }
 
-bool is_invalid(string_view buf) {
-  if ((buf.size() & 1) != 0) {
-    return false;
+struct St {
+  long value;
+  long digits;
+
+  St(long value) {
+    const unsigned digits = ceil(log10(value));
+    this->digits = ceil(log10(value) / 2);
+    this->value = value / pow(10, this->digits);
   }
 
-  const auto front = buf.substr(0, buf.size() / 2);
-  const auto back = buf.substr(buf.size() / 2);
+  long get() const { return value * pow(10, digits) + value; }
+  void next() {
+    value++;
 
-  return front == back;
+    if (log10(value) >= digits) {
+      digits++;
+      value = pow(10, digits - 1);
+    }
+  }
+};
+
+ostream &operator<<(ostream &os, const St &st) {
+  return os << st.value << "%" << st.digits;
 }
 
 long Range::invalid_id_sum() const {
   long sum = 0;
 
-  char buf[32];
+  St st(start);
 
-  for (int i = start; i <= end; i++) {
-    int len = snprintf(buf, sizeof(buf), "%d", i);
-    string_view cur(buf, len);
+  long cur = st.get();
+  while (cur <= end) {
+    DBG(st);
+    DBG(cur);
 
-    if (is_invalid(cur)) {
-      sum += i;
+    const bool even_digits = ((long)ceil(log10(cur)) & 1) == 0;
+
+    if ((start <= cur && cur <= end) && even_digits) {
+      sum += cur;
     }
+
+    st.next();
+    cur = st.get();
   }
+
+  DBG(st);
 
   return sum;
 }
