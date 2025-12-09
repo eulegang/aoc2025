@@ -11,6 +11,11 @@ if(NOT GTEST_FOUND)
   message(FATAL_ERROR "failed to find gtest on system")
 endif()
 
+pkg_check_modules(CHROMA REQUIRED chroma)
+if(NOT CHROMA_FOUND)
+  message(FATAL_ERROR "failed to find chroma on system")
+endif()
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils)
 
 enable_testing()

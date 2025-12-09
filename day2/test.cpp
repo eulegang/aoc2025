@@ -1,4 +1,5 @@
 #include "input.h"
+#include "invalid.h"
 #include "model.h"
 #include "gtest/gtest.h"
 
@@ -59,4 +60,23 @@ TEST(Day2, ExampleCounts) {
   }
 
   EXPECT_EQ(sum, 1227775554);
+}
+
+TEST(Day2Invalid, digits) {
+  EXPECT_EQ(digits(0), 0);
+  EXPECT_EQ(digits(9), 1);
+  EXPECT_EQ(digits(10), 2);
+  EXPECT_EQ(digits(99), 2);
+  EXPECT_EQ(digits(100), 3);
+  EXPECT_EQ(digits(999), 3);
+  EXPECT_EQ(digits(1000), 4);
+}
+
+TEST(Day2Invalid, expand) {
+  EXPECT_EQ(expand(0), 1);
+  EXPECT_EQ(expand(1), 1);
+  EXPECT_EQ(expand(2), 10);
+  EXPECT_EQ(expand(3), 100);
+  EXPECT_EQ(expand(4), 1000);
+  EXPECT_EQ(expand(5), 10000);
 }

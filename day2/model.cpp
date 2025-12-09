@@ -1,5 +1,6 @@
 #include "model.h"
 #include "input.h"
+#include <cstdio>
 
 using namespace std;
 
@@ -44,8 +45,12 @@ bool is_invalid(string_view buf) {
 
 long Range::invalid_id_sum() const {
   long sum = 0;
+
+  char buf[32];
+
   for (int i = start; i <= end; i++) {
-    string cur = to_string(i);
+    int len = snprintf(buf, sizeof(buf), "%d", i);
+    string_view cur(buf, len);
 
     if (is_invalid(cur)) {
       sum += i;
@@ -53,4 +58,8 @@ long Range::invalid_id_sum() const {
   }
 
   return sum;
+}
+
+std::ostream &operator<<(std::ostream &out, Range &range) {
+  return out << "[" << range.start << ", " << range.end << "]";
 }

@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <iostream>
 #include <string_view>
 
 struct Range {
@@ -14,5 +15,7 @@ struct Range {
 
   long invalid_id_sum() const;
 };
+
+std::ostream &operator<<(std::ostream &, Range &);
 
 #endif
