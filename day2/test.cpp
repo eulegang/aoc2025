@@ -49,6 +49,22 @@ TEST(Day2, ExampleSubCounts) {
   ANNOUNCE(EXPECT_EQ(Range(2121212118, 2121212124).invalid_id_sum(), 0));
 }
 
+TEST(Part2, ExampleSubCounts) {
+  ANNOUNCE(EXPECT_EQ(Range(11, 22).invalid_id_sum2(), 11 + 22));
+  ANNOUNCE(EXPECT_EQ(Range(95, 115).invalid_id_sum2(), 99 + 111));
+  ANNOUNCE(EXPECT_EQ(Range(998, 1012).invalid_id_sum2(), 999 + 1010));
+  ANNOUNCE(
+      EXPECT_EQ(Range(1188511880, 1188511890).invalid_id_sum2(), 1188511885));
+  ANNOUNCE(EXPECT_EQ(Range(222220, 222224).invalid_id_sum2(), 222222));
+  ANNOUNCE(EXPECT_EQ(Range(1698522, 1698528).invalid_id_sum2(), 0));
+  ANNOUNCE(EXPECT_EQ(Range(446443, 446449).invalid_id_sum2(), 446446));
+  ANNOUNCE(EXPECT_EQ(Range(38593856, 38593862).invalid_id_sum2(), 38593859));
+  ANNOUNCE(EXPECT_EQ(Range(565653, 565659).invalid_id_sum2(), 565656));
+  ANNOUNCE(EXPECT_EQ(Range(824824821, 824824827).invalid_id_sum2(), 824824824));
+  ANNOUNCE(
+      EXPECT_EQ(Range(2121212118, 2121212124).invalid_id_sum2(), 2121212121));
+}
+
 TEST(Day2, ExampleCounts) {
   const string input =
       "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,"
@@ -63,6 +79,23 @@ TEST(Day2, ExampleCounts) {
   }
 
   EXPECT_EQ(sum, 1227775554);
+}
+
+TEST(Part2, ExampleCounts) {
+  GTEST_SKIP_("FOR NOW");
+  const string input =
+      "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,"
+      "1698522-1698528,446443-446449,38593856-38593862,565653-565659,"
+      "824824821-824824827,2121212118-2121212124";
+
+  vector ranges = splitT<Range>(input, ",");
+
+  int sum = 0;
+  for (auto range : ranges) {
+    sum += range.invalid_id_sum2();
+  }
+
+  EXPECT_EQ(sum, 4174379265);
 }
 
 TEST(Day2, PARTS) {
@@ -99,3 +132,5 @@ TEST(Day2, PARTS) {
   ANNOUNCE(EXPECT_EQ(Range(1, 16).invalid_id_sum(), 11));
   // ANNOUNCE(EXPECT_EQ(Range(181025, 232078).invalid_id_sum(), 0));
 }
+
+TEST(gen, full) {}

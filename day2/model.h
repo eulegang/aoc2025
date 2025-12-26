@@ -14,6 +14,7 @@ struct Range {
   bool operator==(const Range &other) const;
 
   long invalid_id_sum() const;
+  long invalid_id_sum2() const;
 };
 
 std::ostream &operator<<(std::ostream &, Range &);

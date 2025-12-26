@@ -67,9 +67,6 @@ long Range::invalid_id_sum() const {
 
   long cur = st.get();
   while (cur <= end) {
-    DBG(st);
-    DBG(cur);
-
     const bool even_digits = ((long)ceil(log10(cur)) & 1) == 0;
 
     if ((start <= cur && cur <= end) && even_digits) {
@@ -80,11 +77,50 @@ long Range::invalid_id_sum() const {
     cur = st.get();
   }
 
-  DBG(st);
-
   return sum;
 }
 
 std::ostream &operator<<(std::ostream &out, Range &range) {
   return out << "[" << range.start << ", " << range.end << "]";
+}
+
+struct St2 {
+  long value;
+  long digits;
+
+  St2(long value) {
+    const unsigned digits = ceil(log10(value));
+    this->digits = ceil(log10(value) / 2);
+    this->value = value / pow(10, this->digits);
+  }
+
+  long get() const { return value * pow(10, digits) + value; }
+  void next() {
+    value++;
+
+    if (log10(value) >= digits) {
+      digits++;
+      value = pow(10, digits - 1);
+    }
+  }
+};
+
+long Range::invalid_id_sum2() const {
+  long sum = 0;
+
+  St2 st(start);
+
+  long cur = st.get();
+  while (cur <= end) {
+    // const bool even_digits = ((long)ceil(log10(cur)) & 1) == 0;
+
+    if ((start <= cur && cur <= end)) {
+      sum += cur;
+    }
+
+    st.next();
+    cur = st.get();
+  }
+
+  return sum;
 }
