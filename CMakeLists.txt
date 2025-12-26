@@ -16,6 +16,12 @@ if(NOT CHROMA_FOUND)
   message(FATAL_ERROR "failed to find chroma on system")
 endif()
 
+pkg_check_modules(PARBOIL REQUIRED parboil)
+if(NOT PARBOIL_FOUND)
+  message(FATAL_ERROR "failed to find parboil on system")
+endif()
+
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils)
 
 enable_testing()
@@ -33,7 +39,7 @@ target_compile_options(utils-tests PRIVATE ${GTEST_CFLAGS})
 
 add_test(utils-tests utils-tests)
 
-set(FOLDERS day1 day2)
+set(FOLDERS day1 day2 day3)
 
 foreach(FOLDER IN ITEMS ${FOLDERS})
   string(REGEX REPLACE "ay" "" DAY_PREFIX ${FOLDER})
@@ -51,12 +57,16 @@ foreach(FOLDER IN ITEMS ${FOLDERS})
   target_compile_features(${DAY_PREFIX}p1 PRIVATE cxx_std_23) 
   target_link_libraries(${DAY_PREFIX}p1 PRIVATE ${CHROMA_LDFLAGS})
   target_compile_options(${DAY_PREFIX}p1 PRIVATE ${CHROMA_CFLAGS})
+  target_link_libraries(${DAY_PREFIX}p1 PRIVATE ${PARBOIL_LDFLAGS})
+  target_compile_options(${DAY_PREFIX}p1 PRIVATE ${PARBOIL_CFLAGS})
 
   add_executable(${DAY_PREFIX}p2 ${${DAY_PREFIX}P2_SRC})
   target_link_libraries(${DAY_PREFIX}p2 PRIVATE utils)
   target_compile_features(${DAY_PREFIX}p2 PRIVATE cxx_std_23) 
   target_link_libraries(${DAY_PREFIX}p2 PRIVATE ${CHROMA_LDFLAGS})
   target_compile_options(${DAY_PREFIX}p2 PRIVATE ${CHROMA_CFLAGS})
+  target_link_libraries(${DAY_PREFIX}p2 PRIVATE ${PARBOIL_LDFLAGS})
+  target_compile_options(${DAY_PREFIX}p2 PRIVATE ${PARBOIL_CFLAGS})
 
   list(FILTER ${DAY_PREFIX}_TEST_SRC EXCLUDE REGEX "part[12].cpp")
   list(APPEND ${DAY_PREFIX}_TEST_SRC "tests/main.cpp")
@@ -69,6 +79,8 @@ foreach(FOLDER IN ITEMS ${FOLDERS})
   target_compile_options(${FOLDER}-tests PRIVATE ${GTEST_CFLAGS})
   target_link_libraries(${FOLDER}-tests PRIVATE ${CHROMA_LDFLAGS})
   target_compile_options(${FOLDER}-tests PRIVATE ${CHROMA_CFLAGS})
+  target_link_libraries(${FOLDER}-tests PRIVATE ${PARBOIL_LDFLAGS})
+  target_compile_options(${FOLDER}-tests PRIVATE ${PARBOIL_CFLAGS})
 
   add_test(${FOLDER}-tests ${FOLDER}-tests)
 endforeach()
